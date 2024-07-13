@@ -1,0 +1,9 @@
+configs:
+  userName: "admin"
+  password: "quest"
+  jdbcUrl: "jdbc:postgresql://questdb-host:8812/qdb"
+  tableName: "your_table_name"
+  autoCreateTable: "true"
+  batchSize: 200
+  maxRetries: 5
+  retryBackoffMs: 500
