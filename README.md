@@ -25,13 +25,19 @@ configs:
 One the configuration file has been created, you can try running the sink connection:
 
 ```bash
+pulsar-admin schemas upload questdb-sink-topic -f $PWD/pulsar/schema.avsc
+
 pulsar-admin sinks create \
-  --tenant public \
-  --namespace default \
-  --name questdb-sink \
-  --sink-type jdbc-postgres \
-  --sinking-topic-name persistent://public/default/your-topic \
-  --sink-config-file pulsar-questdb-sink.yaml
+    --archive $PWD/pulsar/connector/pulsar-io-jdbc-postgres-3.2.2.nar \
+    --inputs questdb-sink-topic \
+    --name questdb-sink \
+    --sink-config-file $PWD/pulsar/connector/pulsar-questdb-sink.yaml \
+    --parallelism 1
+```
+
+### Sending Messages
+```bash
+pulsar-client produce questdb-sink-topic -m '{"x": "foo", "y": "bar"}' -s "\n" -n 100
 ```
 
 #### Schema Evolution

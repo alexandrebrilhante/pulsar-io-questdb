@@ -1,0 +1,24 @@
+{
+  "type": "AVRO",
+  "schema": {
+    "type": "record",
+    "name": "test",
+    "fields": [
+      {
+        "name": "x",
+        "type": [
+          "null",
+          "string"
+        ]
+      },
+      {
+        "name": "y",
+        "type": [
+          "null",
+          "string"
+        ]
+      }
+    ]
+  },
+  "properties": {}
+}

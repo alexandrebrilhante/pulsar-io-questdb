@@ -1,0 +1,1 @@
+CREATE TABLE test_sink (x STRING, y STRING);
