@@ -1,13 +1,15 @@
 #!/bin/zsh
 
 docker run -p 9000:9000 \
-  -p 9009:9009 \
-  -p 8812:8812 \
-  -p 9003:9003 \
-  -v "$(PWD):/var/lib/questdb" \
-  questdb/questdb:8.0.1
+    -p 9009:9009 \
+    -p 8812:8812 \
+    -p 9003:9003 \
+    -v "$(PWD):/var/lib/questdb" \
+    questdb/questdb:8.0.1
 
-curl -G --data-urlencode "query=CREATE TABLE test_sink (x STRING, y STRING);" http:///127.0.0.1:8812/qdb
+curl -G --data-urlencode \
+    "query=CREATE TABLE test_sink (x STRING, y STRING);" \
+    http:///127.0.0.1:8812/qdb
 
 pulsar-admin schemas upload questdb-sink-topic -f $PWD/pulsar/schema.avsc
 
@@ -18,4 +20,5 @@ pulsar-admin sinks create \
     --sink-config-file $PWD/pulsar/connector/pulsar-questdb-sink.yaml \
     --parallelism 1
 
-pulsar-client produce questdb-sink-topic -m '{"x": "foo", "y": "bar"}' -s "\n" -n 100
+pulsar-client produce questdb-sink-topic \
+    -m '{"x": "foo", "y": "bar"}' -s "\n" -n 100

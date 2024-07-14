@@ -10,20 +10,22 @@ Before using the JDBC QuestDB sink connector, you need to create the `pulsar-que
 
 ```yaml
 configs:
-  userName: "admin"
-  password: "quest"
-  jdbcUrl: "jdbc:postgresql://questdb-host:8812/qdb"
-  tableName: "test_sink"
-  autoCreateTable: "true"
-  batchSize: 200
-  maxRetries: 5
-  retryBackoffMs: 500
+    userName: "admin"
+    password: "quest"
+    jdbcUrl: "jdbc:postgresql://127.0.0.1:8812/qdb"
+    tableName: "test_sink"
+    autoCreateTable: "true"
+    batchSize: 200
+    maxRetries: 5
+    retryBackoffMs: 500
 ```
 
 Create your test table by running in your terminal:
 
 ```bash
-curl -G --data-urlencode "query=CREATE TABLE test_sink (x STRING, y STRING);" http:///127.0.0.1:8812/qdb
+curl -G --data-urlencode \
+    "query=CREATE TABLE test_sink (x STRING, y STRING);" \
+    http:///127.0.0.1:8812/qdb
 ```
 
 ### Running
@@ -43,7 +45,8 @@ pulsar-admin sinks create \
 
 ### Sending Messages
 ```bash
-pulsar-client produce questdb-sink-topic -m '{"x": "foo", "y": "bar"}' -s "\n" -n 100
+pulsar-client produce questdb-sink-topic \
+    -m '{"x": "foo", "y": "bar"}' -s "\n" -n 100
 ```
 
 #### Schema Evolution
