@@ -13,11 +13,17 @@ configs:
   userName: "admin"
   password: "quest"
   jdbcUrl: "jdbc:postgresql://questdb-host:8812/qdb"
-  tableName: "your_table_name"
+  tableName: "test_sink"
   autoCreateTable: "true"
   batchSize: 200
   maxRetries: 5
   retryBackoffMs: 500
+```
+
+Create your test table by running in your terminal:
+
+```bash
+curl -G --data-urlencode "query=CREATE TABLE test_sink (x STRING, y STRING);" http:///127.0.0.1:8812/qdb
 ```
 
 ### Running
@@ -42,4 +48,4 @@ pulsar-client produce questdb-sink-topic -m '{"x": "foo", "y": "bar"}' -s "\n" -
 
 #### Schema Evolution
 
-If your data schema changes, you may need to update the QuestDB table schema manually or recreate the Sink with `autoCreateTable` set to `true`.
+If your data schema changes, you may need to update the QuestDB table schema manually or recreate the sink with `autoCreateTable` set to `true`.

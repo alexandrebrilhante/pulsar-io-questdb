@@ -7,6 +7,8 @@ docker run -p 9000:9000 \
   -v "$(PWD):/var/lib/questdb" \
   questdb/questdb:8.0.1
 
+curl -G --data-urlencode "query=CREATE TABLE test_sink (x STRING, y STRING);" http:///127.0.0.1:8812/qdb
+
 pulsar-admin schemas upload questdb-sink-topic -f $PWD/pulsar/schema.avsc
 
 pulsar-admin sinks create \
